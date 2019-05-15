@@ -1,0 +1,21 @@
+@import '../../styles/styles';
+
+.header {
+  background-color: #24292e;
+  padding: 20px;
+}
+
+.header__container {
+  @include container;
+}
+
+
+.header__search-item {
+  width: 300px;
+  background-color: #515151;
+  padding: 5px;
+
+  &::placeholder {
+    color: rgb(226, 225, 224)
+  }
+}
