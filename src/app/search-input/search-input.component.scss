@@ -1,0 +1,13 @@
+.search-input {
+}
+
+.search-input__item {
+  background-color: #515151;
+  color: #bfbfbf;
+  padding: 5px;
+  width: 300px;
+
+  &::placeholder {
+    color: rgb(226, 225, 224);
+  }
+}

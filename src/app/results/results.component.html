@@ -1,0 +1,22 @@
+<div class="results">
+  <div class="results__container">
+    <div class="results__filter">
+      filter here
+    </div>
+    <div class="results__content-container">
+      <div class="results__title-container">
+        <div class="results__title">
+          {{count}} Repositories
+        </div>
+        <div class="results__sort">
+          sort by
+        </div>
+      </div>
+      <div class="results__content" *ngIf="!isLoading">
+        <div class="" *ngFor="let repository of repositories">
+          {{repository}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

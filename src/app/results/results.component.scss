@@ -1,0 +1,35 @@
+@import '../../styles/styles';
+
+.results {
+
+}
+
+.results__container {
+    @include container;
+    display: flex;
+}
+
+.results__filter {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.results__content-container {
+    flex: 1;
+}
+
+.results__title-container {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.results__title {
+    flex: 1;
+    font-size: 23px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.results__sort {
+
+}
