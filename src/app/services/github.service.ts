@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
-import { HeaderOptions, SearchRequest } from '../models/general';
+import {map} from 'rxjs/operators';
+import { HeaderOptions, SearchRequest, SearchResponse } from '../models/general';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class GithubService {
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService
+  ) { }
 
   private apiUrl = 'https://api.github.com/search/';
 
-  searchRepositories(searchRequest: SearchRequest) {
+  searchRepositories(searchRequest: SearchRequest): Observable<SearchResponse> {
     const url = `${this.apiUrl}repositories`;
-    return this.httpService.request(url, searchRequest);
+    return this.httpService.request(url, searchRequest).pipe(map(({items, total_count}) => {
+      const response = new SearchResponse();
+      response.count = total_count;
+      response.items = items;
+      return response;
+    }));
   }
 
   searchUsers(searchRequest: SearchRequest) {

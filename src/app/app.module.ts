@@ -6,18 +6,22 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { ResultsComponent } from './results/results.component';
+import { RepositoryItemComponent } from './repository-item/repository-item.component';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SearchInputComponent,
-    ResultsComponent
+    ResultsComponent,
+    RepositoryItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    MomentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,3 +19,12 @@ export enum OrderBy {
   Asc = 'asc',
   Desc = 'desc'
 }
+
+export class SearchResponse {
+  items: ResponseItem[];
+  count: number;
+}
+
+export interface ResponseItem {
+
+}

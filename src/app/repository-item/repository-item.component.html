@@ -1,0 +1,22 @@
+<div class="repository-item">
+  <div class="repository-item__container">
+    <div class="repository-item__section">
+      <div class="repository-item__title">
+        <a [href]="repository.html_url" target="_blank">
+          {{repository.name}}
+        </a>
+      </div>
+      <div class="repository-item__date">
+        {{repository.updated_at | amDateFormat:'MMMM D, YYYY'}}
+      </div>
+    </div>
+    <div class="repository-item__section">
+        <div class="repository-item__language">
+          {{repository.language}}
+        </div>
+        <div class="repository-item__stargazers">
+           {{repository.stargazers_count}}
+        </div>
+    </div>
+  </div>
+</div>

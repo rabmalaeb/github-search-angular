@@ -13,8 +13,8 @@
         </div>
       </div>
       <div class="results__content" *ngIf="!isLoading">
-        <div class="" *ngFor="let repository of repositories">
-          {{repository}}
+        <div class="results__content-item" *ngFor="let repository of repositories">
+          <app-repository-item [repository]="repository"></app-repository-item>
         </div>
       </div>
     </div>

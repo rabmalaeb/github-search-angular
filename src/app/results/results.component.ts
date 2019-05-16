@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchRequest } from '../models/general';
 import { GithubService } from '../services/github.service';
+import Repository from '../models/repositrory';
 
 @Component({
   selector: 'app-results',
@@ -17,7 +18,7 @@ export class ResultsComponent implements OnInit {
 
   searchRequest: SearchRequest;
 
-  repositories = null;
+  repositories: Repository[] = [];
   count = 0;
   isLoading = false;
 
@@ -31,10 +32,12 @@ export class ResultsComponent implements OnInit {
 
   searchRepositories() {
     this.isLoading = true;
-    this.githubService.searchRepositories(this.searchRequest).subscribe(({total_count, items}) => {
+    this.githubService.searchRepositories(this.searchRequest).subscribe(response => {
       this.isLoading = false;
-      this.count = total_count;
-      this.repositories = items;
+      this.count = response.count;
+      this.repositories = response.items as Repository[];
+      console.log('respo sads d', this.repositories);
+
     });
   }
 
