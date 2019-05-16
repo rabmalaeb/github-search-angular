@@ -1,7 +1,9 @@
 <div class="results">
   <div class="results__container">
     <div class="results__filter">
-      filter here
+      <div class="" *ngFor="let filter of filterList">
+        <div class="" (click) = "searchBy(filter.name)"> {{filter.name}} </div>
+      </div>
     </div>
     <div class="results__content-container">
       <div class="results__title-container">
@@ -13,8 +15,15 @@
         </div>
       </div>
       <div class="results__content" *ngIf="!isLoading">
-        <div class="results__content-item" *ngFor="let repository of repositories">
-          <app-repository-item [repository]="repository"></app-repository-item>
+        <div *ngIf="isRepositories">
+          <div class="results__content-item" *ngFor="let repository of repositories">
+            <app-repository-item [repository]="repository"></app-repository-item>
+          </div>
+        </div>
+        <div *ngIf="isUser">
+          <div class="results__content-item" *ngFor="let user of users">
+            <app-user-item [user]=user></app-user-item>
+          </div>
         </div>
       </div>
     </div>

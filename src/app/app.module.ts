@@ -8,6 +8,8 @@ import { SearchInputComponent } from './search-input/search-input.component';
 import { ResultsComponent } from './results/results.component';
 import { RepositoryItemComponent } from './repository-item/repository-item.component';
 import { MomentModule } from 'ngx-moment';
+import { UserItemComponent } from './user-item/user-item.component';
+import { CodeItemComponent } from './code-item/code-item.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { MomentModule } from 'ngx-moment';
     HeaderComponent,
     SearchInputComponent,
     ResultsComponent,
-    RepositoryItemComponent
+    RepositoryItemComponent,
+    UserItemComponent,
+    CodeItemComponent
   ],
   imports: [
     BrowserModule,

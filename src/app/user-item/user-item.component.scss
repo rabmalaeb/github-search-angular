@@ -1,0 +1,25 @@
+.user-item {
+
+}
+
+.user-item__container {
+    display: flex;
+}
+
+.user-item__image-container {
+    width: 80px;
+    margin-right: 20px;
+}
+
+.user-item__image {
+    width: 100%;
+}
+
+.user-item__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-item__content-item {
+
+}

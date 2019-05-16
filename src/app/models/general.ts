@@ -21,10 +21,23 @@ export enum OrderBy {
 }
 
 export class SearchResponse {
-  items: ResponseItem[];
+  items: {};
   count: number;
 }
 
-export interface ResponseItem {
+export enum Filter {
+  Repositories = 'Repositories',
+  Code = 'Code',
+  Commits = 'Commits',
+  Issues = 'Issues',
+  Packages = 'Packages',
+  Marketplace = 'Marketplace',
+  Topics = 'Topics',
+  Wikis = 'Wikis',
+  Users = 'Users'
+}
 
+export class FilterItem {
+  constructor(public name: Filter, public filterFunction: string) {}
+  public count: number;
 }

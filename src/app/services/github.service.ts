@@ -26,7 +26,12 @@ export class GithubService {
 
   searchUsers(searchRequest: SearchRequest) {
     const url = `${this.apiUrl}users`;
-    return this.httpService.request(url, searchRequest);
+    return this.httpService.request(url, searchRequest).pipe(map(({ items, total_count }) => {
+      const response = new SearchResponse();
+      response.count = total_count;
+      response.items = items;
+      return response;
+    }));
   }
 
   searchCommits(searchRequest: SearchRequest) {
@@ -38,7 +43,12 @@ export class GithubService {
 
   searchCode(searchRequest: SearchRequest) {
     const url = `${this.apiUrl}code`;
-    return this.httpService.request(url, searchRequest);
+    return this.httpService.request(url, searchRequest).pipe(map(({ items, total_count }) => {
+      const response = new SearchResponse();
+      response.count = total_count;
+      response.items = items;
+      return response;
+    }));
   }
 
   searchIssues(searchRequest: SearchRequest) {
