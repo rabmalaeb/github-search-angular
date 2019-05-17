@@ -38,7 +38,12 @@ export class GithubService {
     const url = `${this.apiUrl}commits`;
     const headerOptions: Array<HeaderOptions> = [];
     headerOptions.push(new HeaderOptions('Accept', 'application/vnd.github.cloak-preview'));
-    return this.httpService.request(url, searchRequest, headerOptions);
+    return this.httpService.request(url, searchRequest, headerOptions).pipe(map(({ items, total_count }) => {
+      const response = new SearchResponse();
+      response.count = total_count;
+      response.items = items;
+      return response;
+    }));
   }
 
   searchCode(searchRequest: SearchRequest) {
@@ -53,13 +58,23 @@ export class GithubService {
 
   searchIssues(searchRequest: SearchRequest) {
     const url = `${this.apiUrl}issues`;
-    return this.httpService.request(url, searchRequest);
+    return this.httpService.request(url, searchRequest).pipe(map(({ items, total_count }) => {
+      const response = new SearchResponse();
+      response.count = total_count;
+      response.items = items;
+      return response;
+    }));
   }
 
   searchTopics(searchRequest: SearchRequest) {
     const url = `${this.apiUrl}topics`;
     const headerOptions: Array<HeaderOptions> = [];
     headerOptions.push(new HeaderOptions('Accept', 'application/vnd.github.mercy-preview+json'));
-    return this.httpService.request(url, searchRequest, headerOptions);
+    return this.httpService.request(url, searchRequest, headerOptions).pipe(map(({ items, total_count }) => {
+      const response = new SearchResponse();
+      response.count = total_count;
+      response.items = items;
+      return response;
+    }));
   }
 }

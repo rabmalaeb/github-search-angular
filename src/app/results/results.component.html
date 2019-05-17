@@ -1,14 +1,17 @@
 <div class="results">
   <div class="results__container">
     <div class="results__filter">
-      <div class="" *ngFor="let filter of filterList">
-        <div class="" (click) = "searchBy(filter.name)"> {{filter.name}} </div>
+      <div class="results__filter-section">
+        <div class="results__filter-item-container" *ngFor="let filter of filterList">
+          <div class="results__filter-item-name" (click) = "searchBy(filter.name)"> {{filter.name}} </div>
+          <div class="results__filter-item-count"> {{filter.count}} </div>
+        </div>
       </div>
     </div>
     <div class="results__content-container">
       <div class="results__title-container">
         <div class="results__title">
-          {{count}} Repositories
+          {{count}} {{filterType}}
         </div>
         <div class="results__sort">
           sort by
@@ -21,29 +24,34 @@
           </div>
         </div>
         <div *ngIf="isUser">
+          asd
           <div class="results__content-item" *ngFor="let user of users">
             <app-user-item [user]=user></app-user-item>
           </div>
         </div>
         <div *ngIf="isCode">
+          2
           <div class="results__content-item" *ngFor="let code of codes">
             <app-code-item [code]=code></app-code-item>
           </div>
         </div>
 
         <div *ngIf="isTopic">
+          3
           <div class="results__content-item" *ngFor="let topic of topics">
             <app-topic-item [topic]=topic></app-topic-item>
           </div>
         </div>
 
         <div *ngIf="isCommit">
+          4
           <div class="results__content-item" *ngFor="let commit of commits">
             <app-commit-item [commit]=commit></app-commit-item>
           </div>
         </div>
 
         <div *ngIf="isIssue">
+          5
           <div class="results__content-item" *ngFor="let issue of issues">
             <app-issue-item [issue]=issue></app-issue-item>
           </div>

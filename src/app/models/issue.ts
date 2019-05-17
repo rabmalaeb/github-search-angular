@@ -1,6 +1,6 @@
 export default interface Issue {
   assignee: string;
-  assignees: string;
+  assignees: [];
   author_association: string;
   body: string;
   closed_at: string;
@@ -10,9 +10,9 @@ export default interface Issue {
   events_url: string;
   html_url: string;
   id: string;
-  labels: string;
+  labels: [];
   labels_url: string;
-  locked: string;
+  locked: boolean;
   milestone: string;
   node_id: string;
   number: string;
@@ -24,3 +24,4 @@ export default interface Issue {
   url: string;
   user: {};
 }
+

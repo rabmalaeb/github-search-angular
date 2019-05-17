@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Commit } from '../models/commit';
 
 @Component({
   selector: 'app-commit-item',
@@ -7,11 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CommitItemComponent implements OnInit {
 
-  @Input() commit: {};
+  @Input() commit: Commit;
 
   constructor() { }
 
   ngOnInit() {
+    console.log('commit item ', this.commit);
+
   }
 
 }

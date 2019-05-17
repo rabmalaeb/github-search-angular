@@ -4,6 +4,10 @@ import { SearchRequest, FilterItem, Filter } from '../models/general';
 import { GithubService } from '../services/github.service';
 import Repository from '../models/repositrory';
 import { User } from '../models/user';
+import { filter } from 'rxjs/operators';
+import { Commit } from '../models/commit';
+import Issue from '../models/issue';
+import { Topic } from '../models/topic';
 
 @Component({
   selector: 'app-results',
@@ -22,9 +26,9 @@ export class ResultsComponent implements OnInit {
   repositories: Repository[] = [];
   users: User[] = [];
   codes: User[] = [];
-  topics: User[] = [];
-  commits: User[] = [];
-  issues: User[] = [];
+  topics: Topic[] = [];
+  commits: Commit[] = [];
+  issues: Issue[] = [];
 
   count = 0;
   isLoading = false;
@@ -32,7 +36,7 @@ export class ResultsComponent implements OnInit {
 
   filterList = [
     new FilterItem(Filter.Repositories, 'searchRepositories'),
-    new FilterItem(Filter.Code, 'searchCode'),
+    // new FilterItem(Filter.Code, 'searchCode'),
     new FilterItem(Filter.Commits, 'searchCommits'),
     new FilterItem(Filter.Issues, 'searchIssues'),
     // new FilterItem(Filter.Packages, 'searchRepositories'),
@@ -46,34 +50,44 @@ export class ResultsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchRequest = new SearchRequest();
       this.searchRequest.q = params.q;
-      this.searchRepositories();
+      this.searchAllFilters();
     });
   }
 
-  searchRepositories() {
+  searchAllFilters() {
+    this.filterList.forEach(filterItem => {
+      this[filterItem.filterFunction]();
+    });
     this.filterType = Filter.Repositories;
+  }
+
+  searchRepositories() {
     this.isLoading = true;
     this.githubService.searchRepositories(this.searchRequest).subscribe(response => {
       this.isLoading = false;
       this.count = response.count;
+      this.setCount(Filter.Repositories, response.count);
       this.repositories = response.items as Repository[];
 
     });
   }
 
   searchUsers() {
-    this.filterType = Filter.Users;
     this.githubService.searchUsers(this.searchRequest).subscribe(response => {
       this.count = response.count;
       this.users = response.items as User[];
+      this.setCount(Filter.Users, response.count);
       console.log('user response is ', response);
     });
   }
 
   searchCommits() {
     this.githubService.searchCommits(this.searchRequest).subscribe(response => {
+      console.log('commits response is ', response);
+
       this.count = response.count;
-      this.users = response.items as User[];
+      this.commits = response.items as Commit[];
+      this.setCount(Filter.Commits, response.count);
       console.log('user response is ', response);
     });
   }
@@ -81,7 +95,8 @@ export class ResultsComponent implements OnInit {
   searchIssues() {
     this.githubService.searchIssues(this.searchRequest).subscribe(response => {
       this.count = response.count;
-      this.users = response.items as User[];
+      this.issues = response.items as Issue[];
+      this.setCount(Filter.Issues, response.count);
       console.log('user response is ', response);
     });
   }
@@ -89,7 +104,8 @@ export class ResultsComponent implements OnInit {
   searchTopics() {
     this.githubService.searchTopics(this.searchRequest).subscribe(response => {
       this.count = response.count;
-      this.users = response.items as User[];
+      this.topics = response.items as Topic[];
+      this.setCount(Filter.Topics, response.count);
       console.log('user response is ', response);
     });
   }
@@ -98,13 +114,23 @@ export class ResultsComponent implements OnInit {
     this.githubService.searchCode(this.searchRequest).subscribe(response => {
       this.count = response.count;
       this.users = response.items as User[];
+      this.setCount(Filter.Code, response.count);
       console.log('user response is ', response);
     });
   }
 
   searchBy(filterName: Filter) {
-    const filterItem = this.filterList.find(filter => filter.name === filterName);
+    const filterItem = this.filterList.find(item => item.name === filterName);
+    this.filterType = filterName;
     this[filterItem.filterFunction]();
+  }
+
+  setCount(filterType: Filter, count: number) {
+    this.filterList.forEach(item => {
+      if (item.name === filterType) {
+        item.count = count;
+      }
+    });
   }
 
   get isRepositories() {
