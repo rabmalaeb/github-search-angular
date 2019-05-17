@@ -1,0 +1,25 @@
+@import '../../../styles/styles';
+
+.commit-item {
+}
+
+.commit-item__container {
+  display: flex;
+}
+
+.commit-item__section {
+  display: flex;
+
+  &:first-child {
+    flex: 1;
+    flex-direction: column;
+  }
+}
+
+.commit-item__title {
+  @include title;
+}
+
+.commit-item__description {
+  @include description;
+}

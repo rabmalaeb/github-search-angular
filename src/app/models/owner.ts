@@ -1,4 +1,4 @@
-export default interface Owner {
+export interface Owner {
   avatar_url: string;
   events_url: string;
   followers_url: string;
@@ -18,4 +18,3 @@ export default interface Owner {
   type: string;
   url: string;
 }
-

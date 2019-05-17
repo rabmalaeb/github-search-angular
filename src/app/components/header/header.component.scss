@@ -1,0 +1,10 @@
+@import '../../../styles/styles';
+
+.header {
+  background-color: #24292e;
+  padding: 20px;
+}
+
+.header__container {
+  @include container;
+}

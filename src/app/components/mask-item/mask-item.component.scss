@@ -1,0 +1,46 @@
+@import '../../../styles/styles';
+
+.mask-item {
+}
+
+.mask-item__container {
+  display: flex;
+}
+
+.mask-item__section {
+  display: flex;
+
+  &:first-child {
+    flex: 1;
+    flex-direction: column;
+  }
+}
+
+.mask-item__title {
+  height: 10px;
+}
+
+.mask-item__description {
+  height: 10px;
+}
+
+.mask-item__details {
+  display: flex;
+}
+
+.mask-item-detail {
+  height: 10px;
+  margin-right: 10px;
+}
+
+.mask-item__section {
+  height: 10px;
+}
+
+.mask-item__language {
+  width: 100px;
+}
+
+.mask-item__stargazers {
+  width: 50px;
+}

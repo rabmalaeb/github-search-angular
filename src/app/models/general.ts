@@ -1,5 +1,3 @@
-import { NumberValueAccessor } from '@angular/forms/src/directives';
-
 export class HeaderOptions {
   constructor(public name: string, public value: string) {}
 }

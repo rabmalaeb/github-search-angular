@@ -1,0 +1,70 @@
+<div class="results">
+  <div class="results__container">
+    <div class="results__filter">
+      <div class="results__filter-section">
+        <div class="results__filter-item-container">
+          <div class="results__filter-item" *ngFor="let filter of filterList">
+            <app-filter-item
+              [filter]="filter"
+              (clicked)="searchBy(filter.name)"
+            ></app-filter-item>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="results__content-container">
+      <div class="results__title-container">
+        <div class="results__title">{{ count | number }} {{ filterType }}</div>
+        <div class="results__sort">
+          sort by
+        </div>
+      </div>
+      <div class="results__content" *ngIf="!isLoading; else loadingMask">
+        <div *ngIf="isRepositories">
+          <div
+            class="results__content-item"
+            *ngFor="let repository of repositories"
+          >
+            <app-repository-item
+              [repository]="repository"
+            ></app-repository-item>
+          </div>
+        </div>
+        <div *ngIf="isUser">
+          <div class="results__content-item" *ngFor="let user of users">
+            <app-user-item [user]="user"></app-user-item>
+          </div>
+        </div>
+
+        <div *ngIf="isTopic">
+          <div class="results__content-item" *ngFor="let topic of topics">
+            <app-topic-item [topic]="topic"></app-topic-item>
+          </div>
+        </div>
+
+        <div *ngIf="isCommit">
+          <div class="results__content-item" *ngFor="let commit of commits">
+            <app-commit-item [commit]="commit"></app-commit-item>
+          </div>
+        </div>
+        <div *ngIf="isIssue">
+          <div class="results__content-item" *ngFor="let issue of issues">
+            <app-issue-item [issue]="issue"></app-issue-item>
+          </div>
+        </div>
+      </div>
+      <ng-template #loadingMask>
+        <div class="results__content-item" *ngFor="let i of 10 | repeat">
+          <app-mask-item></app-mask-item>
+        </div>
+      </ng-template>
+      <div class="results__paginator">
+        <app-paginator
+          [length]="count"
+          [currentPage]="currentPage"
+          (page)="getNextResults($event)"
+        ></app-paginator>
+      </div>
+    </div>
+  </div>
+</div>

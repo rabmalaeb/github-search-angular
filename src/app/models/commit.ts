@@ -1,5 +1,5 @@
-import Repository from './repositrory';
-import Owner from './owner';
+import { Repository } from './repositrory';
+import { Owner } from './owner';
 
 export interface Commit {
   author: Owner;

@@ -1,6 +1,6 @@
-import Owner from './owner';
+import { Owner } from './owner';
 
-export default interface Repository {
+export interface Repository {
   archive_url: string;
   archived: boolean;
   assignees_url: string;

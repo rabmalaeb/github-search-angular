@@ -1,10 +1,10 @@
-export default interface Issue {
+export interface Issue {
   assignee: string;
   assignees: [];
   author_association: string;
   body: string;
   closed_at: string;
-  comments: string;is
+  comments: string;
   comments_url: string;
   created_at: string;
   events_url: string;
@@ -24,4 +24,3 @@ export default interface Issue {
   url: string;
   user: {};
 }
-
