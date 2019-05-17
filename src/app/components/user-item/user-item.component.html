@@ -4,7 +4,7 @@
       <img class="user-item__image" [src]="user.avatar_url" alt="" />
     </div>
     <div class="user-item__content">
-      <a [href]="user.html_url" class="user-item__name">
+      <a [href]="user.html_url" target="_blank" class="user-item__name">
         {{ user.login }}
       </a>
       <div *ngIf="!isLoading">

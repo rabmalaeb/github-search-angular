@@ -7,10 +7,12 @@
 
 .paginator__item {
   margin-right: 20px;
-  background-color: #0366d6;
+  background-color: #23282e;
   color: #fff;
   padding: 10px;
   cursor: pointer;
+  border: 0;
+  outline: 0;
 
   &:disabled {
     background-color: #e2e2e2;
@@ -21,6 +23,6 @@
   }
 
   &:hover {
-    background-color: #5a8fcb;
+    background-color: #47494c;
   }
 }

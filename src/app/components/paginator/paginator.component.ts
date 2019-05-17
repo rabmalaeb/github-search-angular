@@ -16,11 +16,6 @@ export class PaginatorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('length is ', this.length);
-    console.log('pageSize is ', this.pageSize);
-    console.log('page is ', this.page);
-    console.log('nextLimitReached is ', this.nextLimitReached);
-    console.log('page is ', this.page);
   }
 
   goToPreviousPage() {

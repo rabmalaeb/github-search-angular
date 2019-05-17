@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   SearchRequest,
@@ -13,29 +13,30 @@ import { User } from '../../models/user';
 import { Commit } from '../../models/commit';
 import { Issue } from '../../models/issue';
 import { Topic } from '../../models/topic';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.scss'],
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private githubService: GithubService
   ) {}
 
   searchRequest: SearchRequest;
+  subscriptionList$: Array<Subscription> = [];
 
   repositories: Repository[] = [];
   commits: Commit[] = [];
   issues: Issue[] = [];
   users: User[] = [];
   topics: Topic[] = [];
-
-  count = 0;
   currentPage = 1;
   isLoading = false;
+  searchParam = '';
 
   /**
    * current filterType
@@ -58,6 +59,7 @@ export class ResultsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchRequest = new SearchRequest();
       this.searchRequest.q = params.q;
+      this.searchParam = params.q;
       this.searchRequest.page = 1;
       this.searchAllFilters();
     });
@@ -78,12 +80,17 @@ export class ResultsComponent implements OnInit {
    */
   searchRepositories() {
     this.isLoading = true;
-    this.githubService
-      .searchRepositories(this.searchRequest)
-      .subscribe(response => {
-        this.doAfterResponse(Filter.Repositories, response);
-        this.repositories = response.items as Repository[];
-      });
+    this.subscriptionList$.push(
+      this.githubService.searchRepositories(this.searchRequest).subscribe(
+        response => {
+          this.doAfterResponse(Filter.Repositories, response);
+          this.repositories = response.items as Repository[];
+        },
+        () => {
+          this.doAfterError();
+        }
+      )
+    );
   }
 
   /**
@@ -91,10 +98,17 @@ export class ResultsComponent implements OnInit {
    */
   searchUsers() {
     this.isLoading = true;
-    this.githubService.searchUsers(this.searchRequest).subscribe(response => {
-      this.doAfterResponse(Filter.Users, response);
-      this.users = response.items as User[];
-    });
+    this.subscriptionList$.push(
+      this.githubService.searchUsers(this.searchRequest).subscribe(
+        response => {
+          this.doAfterResponse(Filter.Users, response);
+          this.users = response.items as User[];
+        },
+        () => {
+          this.doAfterError();
+        }
+      )
+    );
   }
 
   /**
@@ -102,10 +116,17 @@ export class ResultsComponent implements OnInit {
    */
   searchCommits() {
     this.isLoading = true;
-    this.githubService.searchCommits(this.searchRequest).subscribe(response => {
-      this.doAfterResponse(Filter.Commits, response);
-      this.commits = response.items as Commit[];
-    });
+    this.subscriptionList$.push(
+      this.githubService.searchCommits(this.searchRequest).subscribe(
+        response => {
+          this.doAfterResponse(Filter.Commits, response);
+          this.commits = response.items as Commit[];
+        },
+        () => {
+          this.doAfterError();
+        }
+      )
+    );
   }
 
   /**
@@ -113,10 +134,17 @@ export class ResultsComponent implements OnInit {
    */
   searchIssues() {
     this.isLoading = true;
-    this.githubService.searchIssues(this.searchRequest).subscribe(response => {
-      this.doAfterResponse(Filter.Issues, response);
-      this.issues = response.items as Issue[];
-    });
+    this.subscriptionList$.push(
+      this.githubService.searchIssues(this.searchRequest).subscribe(
+        response => {
+          this.doAfterResponse(Filter.Issues, response);
+          this.issues = response.items as Issue[];
+        },
+        () => {
+          this.doAfterError();
+        }
+      )
+    );
   }
 
   /**
@@ -124,10 +152,17 @@ export class ResultsComponent implements OnInit {
    */
   searchTopics() {
     this.isLoading = true;
-    this.githubService.searchTopics(this.searchRequest).subscribe(response => {
-      this.doAfterResponse(Filter.Topics, response);
-      this.topics = response.items as Topic[];
-    });
+    this.subscriptionList$.push(
+      this.githubService.searchTopics(this.searchRequest).subscribe(
+        response => {
+          this.doAfterResponse(Filter.Topics, response);
+          this.topics = response.items as Topic[];
+        },
+        () => {
+          this.doAfterError();
+        }
+      )
+    );
   }
 
   /**
@@ -135,16 +170,26 @@ export class ResultsComponent implements OnInit {
    */
   searchCode() {
     this.isLoading = true;
-    this.githubService.searchCode(this.searchRequest).subscribe(response => {
-      this.doAfterResponse(Filter.Code, response);
-      this.users = response.items as User[];
-    });
+    this.subscriptionList$.push(
+      this.githubService.searchCode(this.searchRequest).subscribe(
+        response => {
+          this.doAfterResponse(Filter.Code, response);
+          this.users = response.items as User[];
+        },
+        () => {
+          this.doAfterError();
+        }
+      )
+    );
   }
 
   doAfterResponse(filter: Filter, response: SearchResponse) {
     this.isLoading = false;
     this.setCount(filter, response.count);
-    this.count = response.count;
+  }
+
+  doAfterError() {
+    this.isLoading = false;
   }
   /**
    * call the filterFunction of the selected filter from the filterList
@@ -188,7 +233,6 @@ export class ResultsComponent implements OnInit {
    * reset the count and the current page
    */
   resetPaginator() {
-    this.count = 0;
     this.currentPage = 1;
   }
 
@@ -204,6 +248,16 @@ export class ResultsComponent implements OnInit {
         item.isSelected = true;
       }
     });
+  }
+
+  get count() {
+    let selectedCount = 0;
+    this.filterList.forEach(filter => {
+      if (filter.isSelected) {
+        selectedCount = filter.count;
+      }
+    });
+    return selectedCount;
   }
 
   get isRepositories() {
@@ -224,5 +278,52 @@ export class ResultsComponent implements OnInit {
 
   get isIssue() {
     return this.filterType === Filter.Issues;
+  }
+
+  get hasNoResults() {
+    if (!this.isLoading) {
+      switch (this.filterType) {
+        case Filter.Repositories:
+          if (this.repositories.length === 0) {
+            return true;
+          }
+          break;
+        case Filter.Commits:
+          if (this.commits.length === 0) {
+            return true;
+          }
+          break;
+        case Filter.Issues:
+          if (this.issues.length === 0) {
+            return true;
+          }
+          break;
+        case Filter.Topics:
+          if (this.topics.length === 0) {
+            return true;
+          }
+          break;
+        case Filter.Users:
+          if (this.users.length === 0) {
+            return true;
+          }
+          break;
+        case Filter.Issues:
+          if (this.issues.length === 0) {
+            return true;
+          }
+          break;
+        default:
+          return false;
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscriptionList$.forEach($sub => {
+      if ($sub) {
+        $sub.unsubscribe();
+      }
+    });
   }
 }

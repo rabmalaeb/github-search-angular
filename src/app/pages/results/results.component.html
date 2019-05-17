@@ -12,12 +12,9 @@
         </div>
       </div>
     </div>
-    <div class="results__content-container">
+    <div class="results__content-container" *ngIf="!hasNoResults; else noResults">
       <div class="results__title-container">
-        <div class="results__title">{{ count | number }} {{ filterType }}</div>
-        <div class="results__sort">
-          sort by
-        </div>
+        <div class="results__title">{{ count | number }} {{ filterType }} Results</div>
       </div>
       <div class="results__content" *ngIf="!isLoading; else loadingMask">
         <div *ngIf="isRepositories">
@@ -66,5 +63,13 @@
         ></app-paginator>
       </div>
     </div>
+    <ng-template #noResults>
+      <div class="results__error-container">
+        <div class="results__error">
+          We couldn’t find any repositories matching {{searchParam}}
+        </div>
+      </div>
+    </ng-template>
+    
   </div>
 </div>

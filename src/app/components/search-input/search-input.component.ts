@@ -4,18 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-search-input',
   templateUrl: './search-input.component.html',
-  styleUrls: ['./search-input.component.scss']
+  styleUrls: ['./search-input.component.scss'],
 })
 export class SearchInputComponent implements OnInit {
-
   searchItem = '';
 
   @Input() type = 'nav';
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   /**
    * get the query param from the route and set it to searchItem
@@ -30,9 +26,17 @@ export class SearchInputComponent implements OnInit {
    * navigate to results page with the search param as a query param
    */
   searchRepositories() {
-    this.router.navigate(['/results'], {
-      queryParams: { q: this.searchItem }
-    });
+    if (!this.searchItem) {
+      this.navigateToHome();
+    } else {
+      this.router.navigate(['/results'], {
+        queryParams: { q: this.searchItem },
+      });
+    }
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/']);
   }
 
   /**

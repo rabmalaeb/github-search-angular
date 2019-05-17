@@ -3,18 +3,23 @@
 .issue-item {
 
 }
-.issue-item__container {
 
+.issue-item__container {
+  display: flex;
 }
+
 .issue-item__image-container {
 
 }
-.issue-item__content {
 
+.issue-item__content {
+  flex: 1;
 }
+
 .issue-item__name {
   @include title;
 }
+
 .issue-item__description {
   @include description;
 }
