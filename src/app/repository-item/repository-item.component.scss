@@ -18,11 +18,23 @@
 .repository-item__title {
   font-size: 21px;
   font-weight: bold;
-  color: blue;
+  color: rgb(3, 102, 214);
+  text-decoration: none;
+  margin-bottom: 10px;
 }
 
-.repository-item__date {
-  color: #586069;
+.repository-item__description {
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.repository-item__details {
+   display: flex;
+}
+
+.repository-item-detail {
+  font-size: 12px;
+  margin-right: 10px;
 }
 
 .repository-item__section {

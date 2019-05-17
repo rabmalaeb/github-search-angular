@@ -44,7 +44,7 @@ export default interface Repository {
   labels_url: string;
   language: string;
   languages_url: string;
-  license: string;
+  license: Licence;
   merges_url: string;
   milestones_url: string;
   mirror_url: string;
@@ -76,4 +76,12 @@ export default interface Repository {
   url: string;
   watchers: number;
   watchers_count: number;
+}
+
+export interface Licence {
+  key: string;
+  name: string;
+  spdx_id: string;
+  url: string;
+  node_id: string;
 }

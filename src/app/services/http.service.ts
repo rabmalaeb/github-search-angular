@@ -12,7 +12,7 @@ export class HttpService {
    */
   constructor(private http: HttpClient) { }
 
-  request(url: string, data: object, headerOptions: HeaderOptions[] = null) {
+  request(url: string, data: object = {}, headerOptions: HeaderOptions[] = []) {
     console.log('headers ', headerOptions);
 
     let params = new HttpParams();

@@ -1,11 +1,25 @@
 <div class="user-item">
   <div class="user-item__container">
     <div class="user-item__image-container">
-      <img class="user-item__image" [src]="user.avatar_url" alt="">
+      <img class="user-item__image" [src]="user.avatar_url" alt="" />
     </div>
     <div class="user-item__content">
-    <div class="user-item__content-item"> {{user.login}} </div>
-    <div class="user-item__content-item"></div>
+      <a [href]="user.html_url" class="user-item__name">
+        {{ user.login }}
+      </a>
+      <div *ngIf="!isLoading">
+        <div class="user-item__description">
+          {{ userDetails.bio }}
+        </div>
+        <div class="user-item__details">
+          <div class="user-item__detail" *ngIf="userDetails.location">
+              {{ userDetails.location }}
+          </div>
+          <div class="user-item__detail" *ngIf="userDetails.email">
+              {{ userDetails.email }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

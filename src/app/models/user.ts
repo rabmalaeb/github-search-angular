@@ -19,3 +19,12 @@ export interface User {
   type: string;
   url: string;
 }
+
+
+export interface UserDetails {
+  name: string;
+  location: string;
+  email: string;
+  bio: string;
+
+}

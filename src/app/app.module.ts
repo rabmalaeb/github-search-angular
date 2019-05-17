@@ -13,6 +13,7 @@ import { CodeItemComponent } from './code-item/code-item.component';
 import { CommitItemComponent } from './commit-item/commit-item.component';
 import { IssueItemComponent } from './issue-item/issue-item.component';
 import { TopicItemComponent } from './topic-item/topic-item.component';
+import { LimitTextPipe } from './pipes/limit-text.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TopicItemComponent } from './topic-item/topic-item.component';
     CodeItemComponent,
     CommitItemComponent,
     IssueItemComponent,
-    TopicItemComponent
+    TopicItemComponent,
+    LimitTextPipe
   ],
   imports: [
     BrowserModule,
