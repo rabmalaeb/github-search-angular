@@ -21,6 +21,11 @@ export class ResultsComponent implements OnInit {
 
   repositories: Repository[] = [];
   users: User[] = [];
+  codes: User[] = [];
+  topics: User[] = [];
+  commits: User[] = [];
+  issues: User[] = [];
+
   count = 0;
   isLoading = false;
   filterType: Filter = Filter.Repositories;
@@ -28,12 +33,12 @@ export class ResultsComponent implements OnInit {
   filterList = [
     new FilterItem(Filter.Repositories, 'searchRepositories'),
     new FilterItem(Filter.Code, 'searchCode'),
-    new FilterItem(Filter.Commits, 'searchRepositories'),
-    new FilterItem(Filter.Issues, 'searchRepositories'),
-    new FilterItem(Filter.Packages, 'searchRepositories'),
-    new FilterItem(Filter.Marketplace, 'searchRepositories'),
-    new FilterItem(Filter.Topics, 'searchRepositories'),
-    new FilterItem(Filter.Wikis, 'searchRepositories'),
+    new FilterItem(Filter.Commits, 'searchCommits'),
+    new FilterItem(Filter.Issues, 'searchIssues'),
+    // new FilterItem(Filter.Packages, 'searchRepositories'),
+    // new FilterItem(Filter.Marketplace, 'searchRepositories'),
+    new FilterItem(Filter.Topics, 'searchTopics'),
+    // new FilterItem(Filter.Wikis, 'searchRepositories'),
     new FilterItem(Filter.Users, 'searchUsers')
   ];
 
@@ -65,6 +70,30 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  searchCommits() {
+    this.githubService.searchCommits(this.searchRequest).subscribe(response => {
+      this.count = response.count;
+      this.users = response.items as User[];
+      console.log('user response is ', response);
+    });
+  }
+
+  searchIssues() {
+    this.githubService.searchIssues(this.searchRequest).subscribe(response => {
+      this.count = response.count;
+      this.users = response.items as User[];
+      console.log('user response is ', response);
+    });
+  }
+
+  searchTopics() {
+    this.githubService.searchTopics(this.searchRequest).subscribe(response => {
+      this.count = response.count;
+      this.users = response.items as User[];
+      console.log('user response is ', response);
+    });
+  }
+
   searchCode() {
     this.githubService.searchCode(this.searchRequest).subscribe(response => {
       this.count = response.count;
@@ -88,5 +117,17 @@ export class ResultsComponent implements OnInit {
 
   get isCode() {
     return this.filterType === Filter.Code;
+  }
+
+  get isTopic() {
+    return this.filterType === Filter.Topics;
+  }
+
+  get isCommit() {
+    return this.filterType === Filter.Commits;
+  }
+
+  get isIssue() {
+    return this.filterType === Filter.Issues;
   }
 }

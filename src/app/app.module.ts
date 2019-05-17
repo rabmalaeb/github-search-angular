@@ -10,6 +10,9 @@ import { RepositoryItemComponent } from './repository-item/repository-item.compo
 import { MomentModule } from 'ngx-moment';
 import { UserItemComponent } from './user-item/user-item.component';
 import { CodeItemComponent } from './code-item/code-item.component';
+import { CommitItemComponent } from './commit-item/commit-item.component';
+import { IssueItemComponent } from './issue-item/issue-item.component';
+import { TopicItemComponent } from './topic-item/topic-item.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { CodeItemComponent } from './code-item/code-item.component';
     ResultsComponent,
     RepositoryItemComponent,
     UserItemComponent,
-    CodeItemComponent
+    CodeItemComponent,
+    CommitItemComponent,
+    IssueItemComponent,
+    TopicItemComponent
   ],
   imports: [
     BrowserModule,

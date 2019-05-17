@@ -25,6 +25,29 @@
             <app-user-item [user]=user></app-user-item>
           </div>
         </div>
+        <div *ngIf="isCode">
+          <div class="results__content-item" *ngFor="let code of codes">
+            <app-code-item [code]=code></app-code-item>
+          </div>
+        </div>
+
+        <div *ngIf="isTopic">
+          <div class="results__content-item" *ngFor="let topic of topics">
+            <app-topic-item [topic]=topic></app-topic-item>
+          </div>
+        </div>
+
+        <div *ngIf="isCommit">
+          <div class="results__content-item" *ngFor="let commit of commits">
+            <app-commit-item [commit]=commit></app-commit-item>
+          </div>
+        </div>
+
+        <div *ngIf="isIssue">
+          <div class="results__content-item" *ngFor="let issue of issues">
+            <app-issue-item [issue]=issue></app-issue-item>
+          </div>
+        </div>
       </div>
     </div>
   </div>
