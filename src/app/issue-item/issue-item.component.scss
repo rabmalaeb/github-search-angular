@@ -1,0 +1,20 @@
+@import '../../styles/styles';
+
+.issue-item {
+
+}
+.issue-item__container {
+
+}
+.issue-item__image-container {
+
+}
+.issue-item__content {
+
+}
+.issue-item__name {
+  @include title;
+}
+.issue-item__description {
+  @include description;
+}

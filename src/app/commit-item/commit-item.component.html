@@ -1,3 +1,18 @@
-<p>
-  commit-item works!
-</p>
+<div class="commit-item">
+    <div class="commit-item__container">
+      <div class="commit-item__image-container">
+        <img src="" alt="" srcset="" class="commit-item__image" />
+      </div>
+      <div class="commit-item__content">
+        <a class="commit-item__title" [href]="commit.html_url">
+          {{commit.commit.message | limit: 70}}
+        </a>
+        <div class="commit-item__description">
+          {{commit.commit.author.name}} authored and {{commit.commit.committer.name}} commited to {{commit.repository.full_name}}
+        </div>
+      </div>
+      <div class="">
+        # {{commit.number}}
+      </div>
+    </div>
+  </div>

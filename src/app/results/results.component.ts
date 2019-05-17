@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SearchRequest, FilterItem, Filter } from '../models/general';
+import { SearchRequest, FilterItem, Filter, PaginatorEvent } from '../models/general';
 import { GithubService } from '../services/github.service';
 import Repository from '../models/repositrory';
 import { User } from '../models/user';
@@ -31,6 +31,7 @@ export class ResultsComponent implements OnInit {
   issues: Issue[] = [];
 
   count = 0;
+  currentPage = 1;
   isLoading = false;
   filterType: Filter = Filter.Repositories;
 
@@ -50,6 +51,7 @@ export class ResultsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchRequest = new SearchRequest();
       this.searchRequest.q = params.q;
+      this.searchRequest.page = 1;
       this.searchAllFilters();
     });
   }
@@ -84,7 +86,6 @@ export class ResultsComponent implements OnInit {
   searchCommits() {
     this.githubService.searchCommits(this.searchRequest).subscribe(response => {
       console.log('commits response is ', response);
-
       this.count = response.count;
       this.commits = response.items as Commit[];
       this.setCount(Filter.Commits, response.count);
@@ -120,6 +121,9 @@ export class ResultsComponent implements OnInit {
   }
 
   searchBy(filterName: Filter) {
+    if (this.filterType !== filterName) {
+      this.resetPaginator();
+    }
     const filterItem = this.filterList.find(item => item.name === filterName);
     this.filterType = filterName;
     this[filterItem.filterFunction]();
@@ -131,6 +135,18 @@ export class ResultsComponent implements OnInit {
         item.count = count;
       }
     });
+  }
+
+  getNextResults(paginatorEvent: PaginatorEvent) {
+    this.searchRequest.page = paginatorEvent.pageIndex;
+    this.currentPage = paginatorEvent.pageIndex;
+    this.searchBy(this.filterType);
+  }
+
+  resetPaginator() {
+    this.count = 0;
+    this.currentPage = 1;
+
   }
 
   get isRepositories() {

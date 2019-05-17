@@ -1,4 +1,4 @@
-<div class="search-input">
+<div class="search-input" [ngClass]="{ 'search-input_is-home': isHome }">
   <input
     (change)="searchRepositories()"
     [(ngModel)]="searchItem"

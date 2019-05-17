@@ -1,0 +1,19 @@
+.paginator {
+
+}
+
+.paginator__container {
+  display: flex;
+}
+
+.paginator__item {
+  margin-right: 20px;
+  background-color: #0366d6;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #5a8fcb;
+  }
+}

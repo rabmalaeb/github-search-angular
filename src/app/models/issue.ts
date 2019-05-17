@@ -4,7 +4,7 @@ export default interface Issue {
   author_association: string;
   body: string;
   closed_at: string;
-  comments: string;
+  comments: string;is
   comments_url: string;
   created_at: string;
   events_url: string;

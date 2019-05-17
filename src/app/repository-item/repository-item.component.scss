@@ -1,3 +1,5 @@
+@import '../../styles/styles';
+
 .repository-item {
 
 }
@@ -16,16 +18,11 @@
 }
 
 .repository-item__title {
-  font-size: 21px;
-  font-weight: bold;
-  color: rgb(3, 102, 214);
-  text-decoration: none;
-  margin-bottom: 10px;
+ @include title;
 }
 
 .repository-item__description {
-    font-size: 14px;
-    margin-bottom: 30px;
+  @include description;
 }
 
 .repository-item__details {
@@ -42,9 +39,9 @@
 }
 
 .repository-item__language {
-
+  width: 100px;
 }
 
 .repository-item__stargazers {
-
+  width: 50px;
 }

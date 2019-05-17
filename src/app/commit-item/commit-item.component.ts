@@ -13,8 +13,6 @@ export class CommitItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('commit item ', this.commit);
-
   }
 
 }

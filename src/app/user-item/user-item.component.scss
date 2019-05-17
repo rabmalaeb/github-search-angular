@@ -1,3 +1,5 @@
+@import '../../styles/styles';
+
 .user-item {
 
 }
@@ -21,16 +23,11 @@
 }
 
 .user-item__name {
-  font-size: 21px;
-  font-weight: bold;
-  color: rgb(3, 102, 214);
-  text-decoration: none;
-  margin-bottom: 10px;
+  @include title;
 }
 
 .user-item__description {
-  font: 14px;
-  margin-bottom: 20px;
+  @include description;
 }
 
 .user-item__details{

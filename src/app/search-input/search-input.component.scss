@@ -1,4 +1,19 @@
+:host {
+  width: 100%;
+}
+
 .search-input {
+  &_is-home {
+    .search-input__item {
+      width: 100%;
+      background-color: #fff;
+      color: unset;
+      border: 1px solid #515151;
+      &::placeholder {
+        color: #515151;
+      }
+    }
+  }
 }
 
 .search-input__item {

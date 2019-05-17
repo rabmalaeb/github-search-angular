@@ -14,6 +14,10 @@ import { CommitItemComponent } from './commit-item/commit-item.component';
 import { IssueItemComponent } from './issue-item/issue-item.component';
 import { TopicItemComponent } from './topic-item/topic-item.component';
 import { LimitTextPipe } from './pipes/limit-text.pipe';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { NumberIndicatorPipe } from './pipes/number-indicator.pipe';
+import { NumberPipe } from './pipes/number.pipe';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { LimitTextPipe } from './pipes/limit-text.pipe';
     CommitItemComponent,
     IssueItemComponent,
     TopicItemComponent,
-    LimitTextPipe
+    LimitTextPipe,
+    PaginatorComponent,
+    NumberIndicatorPipe,
+    NumberPipe,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

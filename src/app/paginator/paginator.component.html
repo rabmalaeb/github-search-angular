@@ -1,0 +1,10 @@
+<div class="paginator">
+  <div class="paginator__container">
+    <div class="paginator__item" (click)="goToPreviousPage()">
+      Previous {{currentPage - 1}}
+    </div>
+    <div class="paginator__item" (click)="goToNextPage()">
+      Next {{currentPage + 1}}
+    </div>
+  </div>
+</div>

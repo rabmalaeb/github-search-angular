@@ -1,3 +1,5 @@
+import { NumberValueAccessor } from '@angular/forms/src/directives';
+
 export class HeaderOptions {
   constructor(public name: string, public value: string) {}
 }
@@ -6,6 +8,7 @@ export class SearchRequest {
   public q: string;
   public sort: SortBy;
   public order: OrderBy;
+  public page: number;
 }
 
 export enum SortBy {
@@ -39,4 +42,11 @@ export enum Filter {
 
 export class FilterItem {
   constructor(public name: Filter, public filterFunction: string, public count: number = 0) {}
+}
+
+export class PaginatorEvent {
+  pageIndex: number;
+  pageSize: number;
+  length: number;
+  previousPageIndex: number;
 }

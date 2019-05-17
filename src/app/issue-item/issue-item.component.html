@@ -1,3 +1,18 @@
-<p>
-  issue-item works!
-</p>
+<div class="issue-item">
+  <div class="issue-item__container">
+    <div class="issue-item__image-container">
+      <img src="" alt="" srcset="" class="issue-item__image" />
+    </div>
+    <div class="issue-item__content">
+      <a class="issue-item__name" [href]="issue.html_url">
+        {{issue.title}}
+      </a>
+      <div class="issue-item__description">
+        {{issue.body}}
+      </div>
+    </div>
+    <div class="">
+      # {{issue.number}}
+    </div>
+  </div>
+</div>
