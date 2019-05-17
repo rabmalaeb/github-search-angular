@@ -41,7 +41,8 @@ export enum Filter {
 }
 
 export class FilterItem {
-  constructor(public name: Filter, public filterFunction: string, public count: number = 0) {}
+  constructor(public name: Filter, public filterFunction: string, public isSelected: boolean = false) {}
+  public count = 0;
 }
 
 export class PaginatorEvent {

@@ -1,0 +1,6 @@
+<div class="filter-item" [ngClass]="{'filter-item_is-selected': filter.isSelected}"(click) = "search()">
+  <div class="filter-item__container">
+    <div class="filter-item__name"> {{filter.name}} </div>
+    <div class="filter-item__count"> {{filter.count}} </div>
+  </div>
+</div>

@@ -2,28 +2,24 @@
   <div class="results__container">
     <div class="results__filter">
       <div class="results__filter-section">
-        <div
-          class="results__filter-item-container"
-          *ngFor="let filter of filterList"
-        >
-          <div
-            class="results__filter-item-name"
-            (click)="searchBy(filter.name)"
-          >
-            {{ filter.name }}
+        <div class="results__filter-item-container">
+          <div class="results__filter-item" *ngFor="let filter of filterList">
+            <app-filter-item
+              [filter]="filter"
+              (clicked)="searchBy(filter.name)"
+            ></app-filter-item>
           </div>
-          <div class="results__filter-item-count">{{ filter.count | numberIndicator}}</div>
         </div>
       </div>
     </div>
     <div class="results__content-container">
       <div class="results__title-container">
-        <div class="results__title">{{ count | number}} {{ filterType }}</div>
+        <div class="results__title">{{ count | number }} {{ filterType }}</div>
         <div class="results__sort">
           sort by
         </div>
       </div>
-      <div class="results__content" *ngIf="!isLoading">
+      <div class="results__content" *ngIf="!isLoading; else loadingMask">
         <div *ngIf="isRepositories">
           <div
             class="results__content-item"
@@ -56,13 +52,17 @@
             <app-commit-item [commit]="commit"></app-commit-item>
           </div>
         </div>
-
         <div *ngIf="isIssue">
           <div class="results__content-item" *ngFor="let issue of issues">
             <app-issue-item [issue]="issue"></app-issue-item>
           </div>
         </div>
       </div>
+      <ng-template #loadingMask>
+        <div class="results__content-item" *ngFor="let i of 10 | repeat">
+          <app-mask-item></app-mask-item>
+        </div>
+      </ng-template>
       <div class="results__paginator">
         <app-paginator
           [length]="count"

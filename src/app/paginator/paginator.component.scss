@@ -1,5 +1,4 @@
 .paginator {
-
 }
 
 .paginator__container {
@@ -12,6 +11,14 @@
   color: #fff;
   padding: 10px;
   cursor: pointer;
+
+  &:disabled {
+    background-color: #e2e2e2;
+
+    &:hover {
+      background-color: #e2e2e2;
+    }
+  }
 
   &:hover {
     background-color: #5a8fcb;

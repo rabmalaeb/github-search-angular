@@ -12,37 +12,19 @@
 .results__filter {
     width: 200px;
     margin-right: 20px;
+    flex-shrink: 0;
 }
 
 .results__filter-section {
   border: 1px solid #e1e4e8;
 }
 
-.results__filter-item-container {
-  display: flex;
-  padding: 10px;
+.results__filter-item {
   border-bottom: 1px solid #e1e4e8;
-  cursor: pointer;
 
   &:last-child {
     border-bottom: 0;
   }
-
-  &:hover {
-    background-color: #f6f8fa;
-  }
-}
-
-.results__filter-item-name {
-  flex: 1;
-}
-
-.results__filter-item-count {
-  font-size: 11px;
-  padding: 4px;
-  color: #fff;
-  background-color: #4d4d4d;
-  border-radius: 20px;
 }
 
 .results__content-container {
@@ -71,4 +53,8 @@
 
 .results__sort {
 
+}
+
+.results__paginator {
+  margin-bottom: 20px;
 }

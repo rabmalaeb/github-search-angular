@@ -1,0 +1,25 @@
+.filter-item {
+  cursor: pointer;
+  &_is-selected {
+    .filter-item__container {
+      border-left: 1px solid orange;
+    }
+  }
+}
+
+.filter-item__container {
+  display: flex;
+  padding: 10px;
+}
+
+.filter-item__name {
+  flex: 1;
+}
+
+.filter-item__count {
+  font-size: 11px;
+  padding: 4px;
+  color: #fff;
+  background-color: #4d4d4d;
+  border-radius: 20px;
+}

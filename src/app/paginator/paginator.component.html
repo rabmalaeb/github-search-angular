@@ -1,10 +1,18 @@
 <div class="paginator">
   <div class="paginator__container">
-    <div class="paginator__item" (click)="goToPreviousPage()">
-      Previous {{currentPage - 1}}
-    </div>
-    <div class="paginator__item" (click)="goToNextPage()">
-      Next {{currentPage + 1}}
-    </div>
+    <button
+      class="paginator__item"
+      [disabled]="previousLimitReached"
+      (click)="goToPreviousPage()"
+    >
+      Previous
+    </button>
+    <button
+      class="paginator__item"
+      [disabled]="nextLimitReached"
+      (click)="goToNextPage()"
+    >
+      Next
+    </button>
   </div>
 </div>

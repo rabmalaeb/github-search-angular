@@ -18,6 +18,9 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { NumberIndicatorPipe } from './pipes/number-indicator.pipe';
 import { NumberPipe } from './pipes/number.pipe';
 import { HomeComponent } from './home/home.component';
+import { RepeatPipe } from './pipes/repeat.pipe';
+import { MaskItemComponent } from './mask-item/mask-item.component';
+import { FilterItemComponent } from './filter-item/filter-item.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { HomeComponent } from './home/home.component';
     PaginatorComponent,
     NumberIndicatorPipe,
     NumberPipe,
-    HomeComponent
+    HomeComponent,
+    RepeatPipe,
+    MaskItemComponent,
+    FilterItemComponent
   ],
   imports: [
     BrowserModule,

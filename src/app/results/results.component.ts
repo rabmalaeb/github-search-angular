@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SearchRequest, FilterItem, Filter, PaginatorEvent } from '../models/general';
+import { SearchRequest, FilterItem, Filter, PaginatorEvent, SearchResponse } from '../models/general';
 import { GithubService } from '../services/github.service';
 import Repository from '../models/repositrory';
 import { User } from '../models/user';
-import { filter } from 'rxjs/operators';
 import { Commit } from '../models/commit';
 import Issue from '../models/issue';
 import { Topic } from '../models/topic';
@@ -24,29 +23,33 @@ export class ResultsComponent implements OnInit {
   searchRequest: SearchRequest;
 
   repositories: Repository[] = [];
-  users: User[] = [];
-  codes: User[] = [];
-  topics: Topic[] = [];
   commits: Commit[] = [];
   issues: Issue[] = [];
+  users: User[] = [];
+  topics: Topic[] = [];
+
 
   count = 0;
   currentPage = 1;
   isLoading = false;
+
+  /**
+   * current filterType
+   */
   filterType: Filter = Filter.Repositories;
 
   filterList = [
-    new FilterItem(Filter.Repositories, 'searchRepositories'),
-    // new FilterItem(Filter.Code, 'searchCode'),
+    new FilterItem(Filter.Repositories, 'searchRepositories', true),
     new FilterItem(Filter.Commits, 'searchCommits'),
     new FilterItem(Filter.Issues, 'searchIssues'),
-    // new FilterItem(Filter.Packages, 'searchRepositories'),
-    // new FilterItem(Filter.Marketplace, 'searchRepositories'),
     new FilterItem(Filter.Topics, 'searchTopics'),
-    // new FilterItem(Filter.Wikis, 'searchRepositories'),
     new FilterItem(Filter.Users, 'searchUsers')
   ];
 
+  /**
+   * create an instance of SearchRequest to be used for all filters
+   * call searchAllFilters
+   */
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.searchRequest = new SearchRequest();
@@ -56,6 +59,9 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  /**
+   * ca;; the filterFunction of all filter items in the filterList
+   */
   searchAllFilters() {
     this.filterList.forEach(filterItem => {
       this[filterItem.filterFunction]();
@@ -63,64 +69,85 @@ export class ResultsComponent implements OnInit {
     this.filterType = Filter.Repositories;
   }
 
+  /**
+   * call the github service to search for repositories
+   */
   searchRepositories() {
     this.isLoading = true;
     this.githubService.searchRepositories(this.searchRequest).subscribe(response => {
-      this.isLoading = false;
-      this.count = response.count;
-      this.setCount(Filter.Repositories, response.count);
+      this.doAfterResponse(Filter.Repositories, response);
       this.repositories = response.items as Repository[];
 
     });
   }
 
+  /**
+   * call the github service to search for users
+   */
   searchUsers() {
+    this.isLoading = true;
     this.githubService.searchUsers(this.searchRequest).subscribe(response => {
-      this.count = response.count;
+      this.doAfterResponse(Filter.Users, response);
       this.users = response.items as User[];
-      this.setCount(Filter.Users, response.count);
-      console.log('user response is ', response);
     });
   }
 
+  /**
+   * call the github service to search for commits
+   */
   searchCommits() {
+    this.isLoading = true;
     this.githubService.searchCommits(this.searchRequest).subscribe(response => {
-      console.log('commits response is ', response);
-      this.count = response.count;
+      this.doAfterResponse(Filter.Commits, response);
       this.commits = response.items as Commit[];
-      this.setCount(Filter.Commits, response.count);
-      console.log('user response is ', response);
     });
   }
 
+  /**
+   * call the github service to search for issues
+   */
   searchIssues() {
+    this.isLoading = true;
     this.githubService.searchIssues(this.searchRequest).subscribe(response => {
-      this.count = response.count;
+      this.doAfterResponse(Filter.Issues, response);
       this.issues = response.items as Issue[];
-      this.setCount(Filter.Issues, response.count);
-      console.log('user response is ', response);
     });
   }
 
+  /**
+   * call the github service to search for topics
+   */
   searchTopics() {
+    this.isLoading = true;
     this.githubService.searchTopics(this.searchRequest).subscribe(response => {
-      this.count = response.count;
+      this.doAfterResponse(Filter.Topics, response);
       this.topics = response.items as Topic[];
-      this.setCount(Filter.Topics, response.count);
-      console.log('user response is ', response);
     });
   }
 
+  /**
+   * call the github service to search for codes
+   */
   searchCode() {
+    this.isLoading = true;
     this.githubService.searchCode(this.searchRequest).subscribe(response => {
-      this.count = response.count;
+      this.doAfterResponse(Filter.Code, response);
       this.users = response.items as User[];
-      this.setCount(Filter.Code, response.count);
-      console.log('user response is ', response);
     });
   }
 
+  doAfterResponse(filter: Filter, response: SearchResponse) {
+    this.isLoading = false;
+    this.setCount(filter, response.count);
+    this.count = response.count;
+  }
+  /**
+   * call the filterFunction of the selected filter from the filterList
+   * if the selected filter changed then reset the paginator values
+   * @param filterName selected filter name
+   */
   searchBy(filterName: Filter) {
+    this.setSelectedFilter(filterName);
     if (this.filterType !== filterName) {
       this.resetPaginator();
     }
@@ -129,6 +156,11 @@ export class ResultsComponent implements OnInit {
     this[filterItem.filterFunction]();
   }
 
+  /**
+   * set the count of the selected filter
+   * @param filterType selected filter name
+   * @param count the count to be set
+   */
   setCount(filterType: Filter, count: number) {
     this.filterList.forEach(item => {
       if (item.name === filterType) {
@@ -137,16 +169,36 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  /**
+   * search again with the upadated page from the paginator
+   * @param paginatorEvent the paginator event containing paginator info
+   */
   getNextResults(paginatorEvent: PaginatorEvent) {
     this.searchRequest.page = paginatorEvent.pageIndex;
     this.currentPage = paginatorEvent.pageIndex;
     this.searchBy(this.filterType);
   }
 
+  /**
+   * reset the count and the current page
+   */
   resetPaginator() {
     this.count = 0;
     this.currentPage = 1;
+  }
 
+  /**
+   * set the isSelected property of the selected filter to true
+   * set the isSelected property of the rest to false
+   * @param filterName the selected filter name
+   */
+  setSelectedFilter(filterName: string) {
+    this.filterList.forEach(item => {
+      item.isSelected = false;
+      if (item.name === filterName) {
+        item.isSelected = true;
+      }
+    });
   }
 
   get isRepositories() {
